@@ -3,6 +3,8 @@ pipeline {
     environment {
         DOCKER_IMAGE = "poojadissanayake/hd-pipeline:${env.BUILD_ID}"
         MONGO_CREDENTIALS = credentials('mongo-connection')
+        SONARQUBE_URL = 'http://localhost:9000'
+        SONAR_TOKEN = credentials('sonarqube-token')
     }
     stages {
         stage('Build'){
@@ -48,8 +50,19 @@ pipeline {
         }
         stage('Code Analysis') {
             steps {
-                echo "Integrate a code analysis tool to analyse the code and ensure it meets industry standards."
-                echo "Tool: SonarQube"
+                script {
+                    echo "Running SonarQube analysis..."
+                    // Run SonarQube analysis
+                    withSonarQubeEnv('SonarQube') {
+                        sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=test-pipeline \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=${SONARQUBE_URL} \
+                        -Dsonar.login=${SONAR_TOKEN}
+                        """
+                    }
+                }
             }
         }
         stage('Security Scan'){
