@@ -28,6 +28,7 @@ pipeline {
                     --name hd-pipeline ${DOCKER_IMAGE} npm start
                     sleep 10  # Allow the application to start up
                     docker exec hd-pipeline npm test
+                    docker stop hd-pipeline
                     """
                 }
             }
