@@ -55,7 +55,7 @@ pipeline {
                     echo "Running SonarQube analysis..."
                     def scannerHome = tool 'SonarScanner';
                     // Run SonarQube analysis
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('sonarQube') {
                         sh "${scannerHome}/bin/sonar-scanner"
                         sh """
                         sonar-scanner \
