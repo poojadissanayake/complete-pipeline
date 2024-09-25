@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = "poojadissanayake/complete-pipeline:${env.BUILD_ID}"
+        MONGO_CREDENTIALS = credentials('mongo-connection')
     }
     stages {
         stage('Build'){
