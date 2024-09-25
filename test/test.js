@@ -2,12 +2,12 @@ import { expect } from "chai";
 import request from "request";
 import { MongoClient } from "mongodb";
 
-const uri = "mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.c1bcmhv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://admin:sQbQ7UpBocNpW85I@cluster0.c1bcmhv.mongodb.net";
 const client = new MongoClient(uri);
 
 const db = client.db('cafe_latte');
 const fb_collection = db.collection('feedback');
-const serverUrl = "http://localhost:3021";
+const serverUrl = "http://localhost:3020";
 
 describe("Application Deployment Tests", function () {
 
@@ -23,8 +23,8 @@ describe("Application Deployment Tests", function () {
     // Test for feedback API status code
     it("should submit feedback and return success message", function (done) {
         const feedbackData = {
-            name: "Testuser4",
-            email: "tester4@example.com",
+            name: "Testuser5",
+            email: "tester5@example.com",
             review: "Great service!"
         };
 

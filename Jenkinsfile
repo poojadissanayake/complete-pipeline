@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = "poojadissanayake/complete-pipeline:${env.BUILD_ID}"
+        DOCKER_IMAGE = "poojadissanayake/hd-pipeline:${env.BUILD_ID}"
         MONGO_CREDENTIALS = credentials('mongo-connection')
     }
     stages {
@@ -18,15 +18,14 @@ pipeline {
             steps{
                 script {
                     echo 'Running tests...'
-                    echo "MongoDB username: ${MONGO_CREDENTIALS_USR}" 
-                    // Run the tests inside the Docker container, passing MongoDB credentials
+                    // Run the Docker container, passing MongoDB credentials and running the tests
                     sh """
                     docker run --rm -d \
                     -e MONGO_USER=${MONGO_CREDENTIALS_USR} \
                     -e MONGO_PASS=${MONGO_CREDENTIALS_PSW} \
-                    --name complete-pipeline ${DOCKER_IMAGE} npm start
-                    sleep 10
-                    docker exec complete-pipeline npm test
+                    --name hd-pipeline ${DOCKER_IMAGE} npm start
+                    sleep 10  # Allow the application to start up
+                    docker exec hd-pipeline npm test
                     """
                 }
             }
