@@ -2,7 +2,7 @@ import { expect } from "chai";
 import request from "request";
 import { MongoClient } from "mongodb";
 
-const uri = "mongodb+srv://${process.env.MONGO_CREDENTIALS_USR}:${process.env.MONGO_CREDENTIALS_PSW}@cluster0.c1bcmhv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.c1bcmhv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri);
 
 const db = client.db('cafe_latte');

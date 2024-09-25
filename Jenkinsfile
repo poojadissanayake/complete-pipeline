@@ -18,8 +18,13 @@ pipeline {
             steps{
                 script {
                     echo 'Running tests...'
-                    // Run the tests inside the Docker container
-                    sh "docker run --rm ${DOCKER_IMAGE} npm test"
+                    // Run the tests inside the Docker container, passing MongoDB credentials
+                    sh """
+                    docker run --rm \
+                    -e MONGO_USER=${MONGO_CREDENTIALS_USR} \
+                    -e MONGO_PASS=${MONGO_CREDENTIALS_PSW} \
+                    ${DOCKER_IMAGE} npm test
+                    """
                 }
             }
             post {
