@@ -13,10 +13,13 @@ pipeline {
                 }
             }
         }
-        stage('Unit and Integration Tests'){
+        stage('Test'){
             steps{
-                echo "Run unit tests to ensure the code functions as expected and run integration tests to ensure the different components of the application work together as expected."
-                echo "Tool: JUnit"
+                script {
+                    echo 'Running tests...'
+                    // Run the tests inside the Docker container
+                    sh "docker run --rm ${DOCKER_IMAGE} npm test"
+                }
             }
             post {
                 success {
