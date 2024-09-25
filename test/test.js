@@ -7,7 +7,7 @@ const client = new MongoClient(uri);
 
 const db = client.db('cafe_latte');
 const fb_collection = db.collection('feedback');
-const serverUrl = "http://localhost:3020";
+const serverUrl = "http://localhost:3021";
 
 describe("Application Deployment Tests", function () {
 
