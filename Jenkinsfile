@@ -24,13 +24,9 @@ pipeline {
                     docker run --rm -d \
                     -e MONGO_USER=${MONGO_CREDENTIALS_USR} \
                     -e MONGO_PASS=${MONGO_CREDENTIALS_PSW} \
-                    --name complete-pipeline \
-                    ${DOCKER_IMAGE} npm start
-                    """
-                    // Wait for the server to start
+                    --name complete-pipeline ${DOCKER_IMAGE} npm start
                     sleep 10
-                    sh """
-                    ${DOCKER_IMAGE} npm test
+                    docker exec complete-pipeline npm test
                     """
                 }
             }
