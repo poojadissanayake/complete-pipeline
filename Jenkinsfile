@@ -56,7 +56,7 @@ pipeline {
                     withSonarQubeEnv('SonarQube') {
                         sh """
                         sonar-scanner \
-                        -Dsonar.projectKey=test-pipeline \
+                        -Dsonar.projectKey=hd-task-sonarqube \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=${SONARQUBE_URL} \
                         -Dsonar.login=${SONAR_TOKEN}
