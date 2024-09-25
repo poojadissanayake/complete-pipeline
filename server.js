@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('Feedback message', (reviewWrote) => {
         console.log('Feedback: ' + reviewWrote);
-      });
+    });
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
@@ -48,6 +48,10 @@ async function connectDB() {
         process.exit(1);
     }
 }
+// Health check route
+app.get('/health', (req, res) => {
+    res.status(200).send("OK");
+});
 
 // POST route to handle feedback submission
 app.post('/feedback', async (req, res) => {
