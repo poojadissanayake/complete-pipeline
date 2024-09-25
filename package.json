@@ -1,0 +1,22 @@
+{
+  "name": "week5",
+  "version": "1.0.0",
+  "description": "Cafe Latte Feedback",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha --reporter spec",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Pooja Dissanayake",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^5.1.1",
+    "express": "^4.19.2",
+    "mocha": "^10.7.3",
+    "mongodb": "6.8",
+    "request": "^2.88.2",
+    "socket.io": "^4.7.5"
+  }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <title>Cafe Latte</title>
+</head>
+
+<body style="background-color: #f4f3ee">
+    <header>
+        <div class="row banner">
+            <div class="col s12 center-align">
+                <h1>Cafe Lattè</h1>
+                <p>Feedback from all the Coffee Lovers....</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h3>Feedback</h3>
+        <p>
+            Please complete the form below to provide your feedback.
+        </p>
+
+        <div id="formContainer">
+            <form id="form" class="col s12" onsubmit="submitted(); return false;">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="name" type="text" class="validate">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="review" class="materialize-textarea"></textarea>
+                        <label for="review">Feedback</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <button class="btn waves-effect green accent-4" type="submit" name="action" id="formSubmit">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+            <h3 class="header">Reviews</h3>
+            <div id="reviewsContainer"></div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/mongoScript.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/js/eventScript.js"></script>
+</body>
+
+</html>
