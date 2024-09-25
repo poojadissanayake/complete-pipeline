@@ -53,8 +53,10 @@ pipeline {
             steps {
                 script {
                     echo "Running SonarQube analysis..."
+                    def scannerHome = tool 'SonarScanner';
                     // Run SonarQube analysis
                     withSonarQubeEnv('SonarQube') {
+                        sh "${scannerHome}/bin/sonar-scanner"
                         sh """
                         sonar-scanner \
                         -Dsonar.projectKey=hd-task-sonarqube \
