@@ -1,10 +1,16 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_IMAGE = "poojadissanayake/complete-pipeline:${env.BUILD_ID}"
+    }
     stages {
         stage('Build'){
             steps{
-                echo "Build the code using a build automation tool to compile and package the code. "
-                echo "Tool: npm"
+                script {
+                    echo 'Building Docker image...'
+                    // Build the Docker image
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                }
             }
         }
         stage('Unit and Integration Tests'){
