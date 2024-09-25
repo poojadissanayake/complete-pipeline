@@ -21,9 +21,15 @@ pipeline {
                     echo "MongoDB username: ${MONGO_CREDENTIALS_USR}" 
                     // Run the tests inside the Docker container, passing MongoDB credentials
                     sh """
-                    docker run --rm \
+                    docker run --rm -d \
                     -e MONGO_USER=${MONGO_CREDENTIALS_USR} \
                     -e MONGO_PASS=${MONGO_CREDENTIALS_PSW} \
+                    --name complete-pipeline \
+                    ${DOCKER_IMAGE} npm start
+                    """
+                    // Wait for the server to start
+                    sleep 10
+                    sh """
                     ${DOCKER_IMAGE} npm test
                     """
                 }
