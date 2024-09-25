@@ -8,7 +8,7 @@ import { createServer } from 'http';
 
 const app = express();
 const port = 3020;
-const uri = "mongodb+srv://admin:sQbQ7UpBocNpW85I@cluster0.c1bcmhv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://${process.env.MONGO_CREDENTIALS_USR}:${process.env.MONGO_CREDENTIALS_PSW}@cluster0.c1bcmhv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri);
 const server = createServer(app);
 const io = new Server(server);
