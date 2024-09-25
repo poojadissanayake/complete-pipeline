@@ -4,7 +4,7 @@ pipeline {
         DOCKER_IMAGE = "poojadissanayake/hd-pipeline:${env.BUILD_ID}"
         MONGO_CREDENTIALS = credentials('mongo-connection')
         SONARQUBE_URL = 'http://localhost:9000'
-        SONAR_TOKEN = credentials('sonarqube-token')
+        SONAR_TOKEN = credentials('sonarQube')
     }
     stages {
         stage('Build'){
