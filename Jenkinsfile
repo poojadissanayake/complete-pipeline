@@ -18,6 +18,7 @@ pipeline {
             steps{
                 script {
                     echo 'Running tests...'
+                    echo "MongoDB username: ${MONGO_USER}" 
                     // Run the tests inside the Docker container, passing MongoDB credentials
                     sh """
                     docker run --rm \
