@@ -77,21 +77,39 @@ pipeline {
                     sh "docker push ${DOCKER_IMAGE}"
                     
                     // SSH into staging server, pull the Docker image, and run Docker Compose
-                    def sshKey = credentials('ec2-key')
-                    sh """
-                    ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 '
-                    # Navigate to the directory with docker-compose.yml
-                    cd /home/ubuntu/docker-compose.yml &&
+                    sshagent(['ec2-key']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no ubuntu@3.107.167.95 '
+                            # Navigate to the directory with docker-compose.yml
+                            cd /home/ubuntu/docker-compose.yml &&
 
-                    # Pull the latest Docker image
-                    docker-compose pull &&
+                            # Pull the latest Docker image
+                            docker-compose pull &&
 
-                    # Stop and remove existing containers (if any)
-                    docker-compose down &&
+                            # Stop and remove existing containers (if any)
+                            docker-compose down &&
 
-                    # Start the application with the new Docker image
-                    docker-compose up -d
-                    '
+                            # Start the application with the new Docker image
+                            docker-compose up -d
+                        '
+                    '''
+                }
+
+                    // def sshKey = credentials('ec2-key')
+                    // sh """
+                    // ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 '
+                    // # Navigate to the directory with docker-compose.yml
+                    // cd /home/ubuntu/docker-compose.yml &&
+
+                    // # Pull the latest Docker image
+                    // docker-compose pull &&
+
+                    // # Stop and remove existing containers (if any)
+                    // docker-compose down &&
+
+                    // # Start the application with the new Docker image
+                    // docker-compose up -d
+                    // '
                     """
                 }
             }
