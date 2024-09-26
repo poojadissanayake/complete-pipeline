@@ -90,12 +90,51 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Staging'){
-            steps{
-                echo "Deploy the application to a staging server"
-                echo "Tool: AWS Cloudformation"
+        stage('Deploy to Staging') {
+            steps {
+                script {
+                    echo "Deploying application to staging environment using Docker Compose..."
+
+                    // Push Docker image to DockerHub
+                    sh "docker push ${DOCKER_IMAGE}"
+
+                    // SSH into staging server, pull the Docker image, and run Docker Compose
+                    // Replace SSH_USER, STAGING_SERVER_IP, and PATH_TO_COMPOSE with actual values.
+                    sh """
+                    ssh ubuntu@3.107.167.95 '
+                        # Navigate to the directory with docker-compose.yml
+                        cd /home/ubuntu/docker-compose.yml &&
+
+                        # Pull the latest Docker image
+                        docker-compose pull &&
+
+                        # Stop and remove existing containers (if any)
+                        docker-compose down &&
+
+                        # Start the application with the new Docker image
+                        docker-compose up -d
+                    '
+                    """
+                }
+            }
+            post {
+                success {
+                    echo 'Deployment to Staging using Docker Compose succeeded.'
+                    mail to: 'poojadissanayake6@gmail.com',
+                        subject: "Deployment to Staging Success",
+                        body: "Deployment to staging completed successfully using Docker Compose.\n\n" +
+                            "Check the build logs at ${env.BUILD_URL}"
+                }
+                failure {
+                    echo 'Deployment to Staging using Docker Compose failed.'
+                    mail to: 'poojadissanayake6@gmail.com',
+                        subject: "Deployment to Staging Failed",
+                        body: "Deployment to staging failed using Docker Compose.\n\n" +
+                            "Check the build logs at ${env.BUILD_URL}"
+                }
             }
         }
+
         stage('Integration Tests on Staging'){
             steps{
                 echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment"

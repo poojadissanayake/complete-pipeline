@@ -1,0 +1,19 @@
+version: '3'
+services:
+  app:
+    image: poojadissanayake/hd-pipeline:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_USER=admin
+      - MONGO_PASS=sQbQ7UpBocNpW85I
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=sQbQ7UpBocNpW85I
+    ports:
+      - "27017:27017"
