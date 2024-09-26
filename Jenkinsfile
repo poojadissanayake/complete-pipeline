@@ -77,11 +77,11 @@ pipeline {
                     sh "docker push ${DOCKER_IMAGE}"
                     
                     // SSH into staging server, pull the Docker image, and run Docker Compose
-                    sshagent(['ec2-key']) {
+                    sshagent(['ubuntu']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no ubuntu@3.107.167.95 '
                             # Navigate to the directory with docker-compose.yml
-                            cd /home/ubuntu/docker-compose.yml &&
+                            cd /home/ubuntu/ &&
 
                             # Pull the latest Docker image
                             docker-compose pull &&
@@ -94,23 +94,6 @@ pipeline {
                         '
                     '''
                     }
-
-                    // def sshKey = credentials('ec2-key')
-                    // sh """
-                    // ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 '
-                    // # Navigate to the directory with docker-compose.yml
-                    // cd /home/ubuntu/docker-compose.yml &&
-
-                    // # Pull the latest Docker image
-                    // docker-compose pull &&
-
-                    // # Stop and remove existing containers (if any)
-                    // docker-compose down &&
-
-                    // # Start the application with the new Docker image
-                    // docker-compose up -d
-                    // '
-                    // """
                 }
             }
             post {
@@ -128,19 +111,6 @@ pipeline {
                         body: "Deployment to staging failed using Docker Compose.\n\n" +
                             "Check the build logs at ${env.BUILD_URL}"
                 }
-            }
-        }
-
-        stage('Integration Tests on Staging'){
-            steps{
-                echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment"
-                echo "Tool: Selenium"
-            }
-        }
-        stage('Deploy to Production'){
-            steps{
-                echo "Deploy the application to a production server"
-                echo "Tool: AWS Cloudformation"
             }
         }
     }
