@@ -5,6 +5,7 @@ pipeline {
         MONGO_CREDENTIALS = credentials('mongo-connection')
         SONARQUBE_URL = 'http://localhost:9000'
         SONAR_TOKEN = credentials('sonarQube')
+        sshKey = credentials('ec2-key')
     }
     stages {
         stage('Build'){
@@ -71,13 +72,12 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 script {
-                    echo "Deploying application to staging environment using Docker Compose..."
+                    echo "Deploying application to staging environment using Docker Compose... ${sshKey}"
 
                     // Push Docker image to DockerHub
                     sh "docker push ${DOCKER_IMAGE}"
                     
                     // SSH into staging server, pull the Docker image, and run Docker Compose
-                    def sshKey = credentials 'ec2-key';
                     sh """
                     ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 << 'EOF'
                         # Navigate to the directory with docker-compose.yml
