@@ -93,7 +93,7 @@ pipeline {
                             docker-compose up -d
                         '
                     '''
-                }
+                    }
 
                     // def sshKey = credentials('ec2-key')
                     // sh """
@@ -110,7 +110,7 @@ pipeline {
                     // # Start the application with the new Docker image
                     // docker-compose up -d
                     // '
-                    """
+                    // """
                 }
             }
             post {
