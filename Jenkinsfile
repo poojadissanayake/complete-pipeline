@@ -72,26 +72,26 @@ pipeline {
             steps {
                 script {
                     echo "Deploying application to staging environment using Docker Compose..."
-                    def sshKey = credentials 'ec2-key';
 
                     // Push Docker image to DockerHub
                     sh "docker push ${DOCKER_IMAGE}"
                     
                     // SSH into staging server, pull the Docker image, and run Docker Compose
+                    def sshKey = credentials('ec2-key')
                     sh """
-                    ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 << 'EOF'
-                        # Navigate to the directory with docker-compose.yml
-                        cd /home/ubuntu/docker-compose.yml &&
+                    ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 '
+                    # Navigate to the directory with docker-compose.yml
+                    cd /home/ubuntu/docker-compose.yml &&
 
-                        # Pull the latest Docker image
-                        docker-compose pull &&
+                    # Pull the latest Docker image
+                    docker-compose pull &&
 
-                        # Stop and remove existing containers
-                        docker-compose down &&
+                    # Stop and remove existing containers (if any)
+                    docker-compose down &&
 
-                        # Start the application with the new Docker image
-                        docker-compose up -d
-                    EOF
+                    # Start the application with the new Docker image
+                    docker-compose up -d
+                    '
                     """
                 }
             }
