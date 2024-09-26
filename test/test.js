@@ -23,8 +23,8 @@ describe("Application Deployment Tests", function () {
     // Test for feedback API status code
     it("should submit feedback and return success message", function (done) {
         const feedbackData = {
-            name: "Testuser16",
-            email: "tester16@example.com",
+            name: "Testuser17",
+            email: "tester17@example.com",
             review: "Great service!"
         };
 

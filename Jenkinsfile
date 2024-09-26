@@ -68,28 +68,6 @@ pipeline {
                 }
             }
         }
-        stage('Security Scan'){
-            steps{
-                echo "Perform a security scan on the code using a tool to identify any vulnerabilities."
-                echo "Tool: Burp Suit"
-            }
-            post {
-                success {
-                    echo 'Security Scan Success.'
-                    mail to: 'poojadissanayake6@gmail.com',
-                        subject: "Security Scan Success",
-                        body: "Security Scan stage completed successfully.\n\n" +
-                            "Check the build logs at ${env.BUILD_URL}"
-                }
-                failure {
-                    echo 'Security Scan failed.'
-                    mail to: 'poojadissanayake6@gmail.com',
-                        subject: "Security Scan failed",
-                        body: "Security Scan failed.\n\n" +
-                            "Check the build logs at ${env.BUILD_URL}"
-                }
-            }
-        }
         stage('Deploy to Staging') {
             steps {
                 script {
@@ -97,11 +75,11 @@ pipeline {
 
                     // Push Docker image to DockerHub
                     sh "docker push ${DOCKER_IMAGE}"
-
+                    
                     // SSH into staging server, pull the Docker image, and run Docker Compose
-                    // Replace SSH_USER, STAGING_SERVER_IP, and PATH_TO_COMPOSE with actual values.
+                    def sshKey = credentials('c2-key')
                     sh """
-                    ssh ubuntu@3.107.167.95 '
+                    ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 '
                         # Navigate to the directory with docker-compose.yml
                         cd /home/ubuntu/docker-compose.yml &&
 
