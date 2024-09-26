@@ -79,19 +79,19 @@ pipeline {
                     // SSH into staging server, pull the Docker image, and run Docker Compose
                     def sshKey = credentials('ec2-key')
                     sh """
-                    ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 '
+                    ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 << 'EOF'
                         # Navigate to the directory with docker-compose.yml
                         cd /home/ubuntu/docker-compose.yml &&
 
                         # Pull the latest Docker image
                         docker-compose pull &&
 
-                        # Stop and remove existing containers (if any)
+                        # Stop and remove existing containers
                         docker-compose down &&
 
                         # Start the application with the new Docker image
                         docker-compose up -d
-                    '
+                    EOF
                     """
                 }
             }
