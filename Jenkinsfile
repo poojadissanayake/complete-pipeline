@@ -77,7 +77,7 @@ pipeline {
                     sh "docker push ${DOCKER_IMAGE}"
                     
                     // SSH into staging server, pull the Docker image, and run Docker Compose
-                    def sshKey = credentials('c2-key')
+                    def sshKey = credentials('ec2-key')
                     sh """
                     ssh -o StrictHostKeyChecking=no -i ${sshKey} ubuntu@3.107.167.95 '
                         # Navigate to the directory with docker-compose.yml
