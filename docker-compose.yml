@@ -3,7 +3,7 @@ services:
     image: poojadissanayake/hd-pipeline:latest
     platform: linux/amd64
     ports:
-      - "8080:8080"
+      - "8080:3020"
     environment:
       - MONGO_USER=admin
       - MONGO_PASS=sQbQ7UpBocNpW85I
