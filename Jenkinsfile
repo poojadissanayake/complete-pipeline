@@ -14,7 +14,7 @@ pipeline {
                     // Build the Docker image
                     // sh 'docker build -t ${DOCKER_IMAGE} .'
                     // Build the Docker image for the amd64 platform
-                    sh 'docker buildx build --platform linux/amd64 -t ${DOCKER_IMAGE} .'
+                    sh 'docker buildx build --platform linux/amd64 -t ${DOCKER_IMAGE} --push .'
                 }
             }
         }
@@ -74,9 +74,6 @@ pipeline {
             steps {
                 script {
                     echo "Deploying application to staging environment using Docker Compose..."
-
-                    // Push Docker image to DockerHub
-                    sh "docker push ${DOCKER_IMAGE}"
                     
                     // SSH into staging server, pull the Docker image, and run Docker Compose
                     sshagent(['ec2-key']) {
