@@ -12,7 +12,8 @@ pipeline {
                 script {
                     echo 'Building Docker image...'
                     // Build the Docker image
-                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                    // sh 'docker build -t ${DOCKER_IMAGE} .'
+                    sh 'docker buildx build --platform linux/amd64 -t ${DOCKER_IMAGE} --push .'
                 }
             }
         }
