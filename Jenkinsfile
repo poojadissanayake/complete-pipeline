@@ -84,13 +84,13 @@ pipeline {
                             cd /home/ubuntu/ &&
 
                             # Pull the latest Docker image
-                            docker-compose pull &&
+                            sudo docker-compose pull &&
 
                             # Stop and remove existing containers (if any)
-                            docker-compose down &&
+                            sudo docker-compose down &&
 
                             # Start the application with the new Docker image
-                            docker-compose up -d
+                            sudo docker-compose up -d
                         '
                     '''
                     }
