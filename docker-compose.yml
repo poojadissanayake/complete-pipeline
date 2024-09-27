@@ -8,6 +8,7 @@ services:
       - MONGO_PASS=sQbQ7UpBocNpW85I
     depends_on:
       - mongo
+    platform: linux/amd64
 
   mongo:
     image: mongo:latest
