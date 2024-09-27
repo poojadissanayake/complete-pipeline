@@ -24,7 +24,7 @@ describe("Application Deployment Tests", function () {
     it("should submit feedback and return success message", function (done) {
         const feedbackData = {
             name: "TestUser",
-            email: "tester34@example.com",
+            email: "tester35@example.com",
             review: "Great service!"
         };
 
